@@ -16,7 +16,7 @@ interface HiddenItem {
   position: { top: string; left: string };
 }
 
-const GIFT_MESSAGE = "[Your funny message about your differences goes here - the chaos and the calm! 🏠🤖]";
+const GIFT_MESSAGE = "Hi Voltron, I'm waiting for the day you sweep with your feet as you walk around our village instead of sneakily leaving socks everywherreeee. 🧦😤💕";
 const GIFT_PHOTO = ""; // Add your photo URL here!
 
 export default function Level2() {
