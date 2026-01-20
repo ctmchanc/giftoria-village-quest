@@ -8,9 +8,10 @@ import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
 import level3Bg from '@/assets/backgrounds/level3-bg.png';
+import level3Photo from '@/assets/photos/level3-jeju.png';
 
-const GIFT_MESSAGE = "[Your heartfelt love letter goes here - tell him how much he means to you! 💕]";
-const GIFT_PHOTO = ""; // Add your photo URL here!
+const GIFT_MESSAGE = "Our love cells are forever connected - from that magical day in Jeju with our little orange car to every adventure we share. You are my heart's home. 💕";
+const GIFT_PHOTO = level3Photo;
 
 export default function Level3() {
   const navigate = useNavigate();

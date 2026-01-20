@@ -16,7 +16,7 @@ interface MatchItem {
   selected: boolean;
 }
 
-const GIFT_MESSAGE = "[Your passionate love note goes here - tell him about the fire between you two! 🔥]";
+const GIFT_MESSAGE = "Hi Dinosaur, thinking of the time in Burgenstock's hot bath makes me dizzy and hot hehe. Dragon can't wait to play in our village with dinosaur. 🔥💕";
 const GIFT_PHOTO = ""; // Add your photo URL here!
 
 export default function Level1() {
