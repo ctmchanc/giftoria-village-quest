@@ -103,10 +103,6 @@ export default function FinalePage() {
               {/* Young Girl */}
               <div className="text-center">
                 <CharacterSprite character="youngGirl" size="md" />
-                <p className="text-xs text-muted-foreground mt-1">
-                  <span className="block">Messy hair, big grin</span>
-                  <span className="block text-secondary">Blue flower skirt 💙🌸</span>
-                </p>
               </div>
             </div>
           </div>
