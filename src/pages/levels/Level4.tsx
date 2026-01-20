@@ -8,9 +8,10 @@ import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
 import level4Bg from '@/assets/backgrounds/level4-bg.png';
+import level4Photo from '@/assets/photos/level4-wizard.png';
 
-const GIFT_MESSAGE = "[Your sweet message about togetherness goes here - about how you love being near him! ✨🥺]";
-const GIFT_PHOTO = ""; // Add your photo URL here!
+const GIFT_MESSAGE = "Wizard, I'm thankful for all the moments you hold down the fort and even when you keep an alarm so you can call me at the end of the day. I appreciate you and feel very taken care of. ✨💕";
+const GIFT_PHOTO = level4Photo;
 
 export default function Level4() {
   const navigate = useNavigate();
