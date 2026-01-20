@@ -119,7 +119,7 @@ export function ChatBubble({
     )}>
       {visibleMessages.map((msg, idx) => (
         <SingleBubble
-          key={idx}
+          key={`${msg.character}-${idx}-${msg.text.slice(0,10)}`}
           message={msg}
           isLatest={idx === currentIndex}
           typingSpeed={typingSpeed}
