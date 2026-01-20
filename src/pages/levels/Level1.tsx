@@ -8,6 +8,7 @@ import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
 import level1Bg from '@/assets/backgrounds/level1-bg.png';
+import level1Photo from '@/assets/photos/level1-burgenstock.png';
 
 interface MatchItem {
   id: number;
@@ -17,7 +18,7 @@ interface MatchItem {
 }
 
 const GIFT_MESSAGE = "Hi Dinosaur, thinking of the time in Burgenstock's hot bath makes me dizzy and hot hehe. Dragon can't wait to play in our village with dinosaur. 🔥💕";
-const GIFT_PHOTO = ""; // Add your photo URL here!
+const GIFT_PHOTO = level1Photo;
 
 export default function Level1() {
   const navigate = useNavigate();
