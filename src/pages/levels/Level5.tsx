@@ -8,9 +8,10 @@ import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
 import level5Bg from '@/assets/backgrounds/level5-bg.png';
+import level5Photo from '@/assets/photos/level5-sleeping.png';
 
 const GIFT_MESSAGE = "Baby nap cell deserves an award for sleeping so much and holding down the fort. This year I hope you get to sleeeeeeep and rest and relax ample, and hang out with my no sleep cell 💤";
-const GIFT_PHOTO = "";
+const GIFT_PHOTO = level5Photo;
 
 export default function Level5() {
   const navigate = useNavigate();
