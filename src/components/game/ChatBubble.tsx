@@ -28,9 +28,10 @@ function SingleBubble({
 }) {
   const [displayedText, setDisplayedText] = useState(isLatest ? '' : message.text);
   const [isTyping, setIsTyping] = useState(isLatest);
+  const [hasTyped, setHasTyped] = useState(!isLatest);
 
   useEffect(() => {
-    if (!isLatest) {
+    if (!isLatest || hasTyped) {
       setDisplayedText(message.text);
       setIsTyping(false);
       return;
@@ -47,12 +48,13 @@ function SingleBubble({
       } else {
         clearInterval(interval);
         setIsTyping(false);
+        setHasTyped(true);
         onTypingComplete?.();
       }
     }, typingSpeed);
 
     return () => clearInterval(interval);
-  }, [message.text, isLatest, typingSpeed, onTypingComplete]);
+  }, [message.text, isLatest, typingSpeed, hasTyped]);
 
   // Determine if message is from first or second character for iMessage-like alignment
   const isFirstCharacter = message.character === 'Dino' || 
