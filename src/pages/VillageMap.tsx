@@ -1,0 +1,196 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Lock, Check, Star } from 'lucide-react';
+import { useGame } from '@/contexts/GameContext';
+import { FloatingHearts } from '@/components/game/FloatingHearts';
+import { cn } from '@/lib/utils';
+
+interface LevelLocation {
+  id: number;
+  name: string;
+  hisCharacter: string;
+  herCharacter: string;
+  emoji: string;
+  color: string;
+  bgColor: string;
+  position: { top: string; left: string };
+}
+
+const locations: LevelLocation[] = [
+  {
+    id: 1,
+    name: 'Passion Peak',
+    hisCharacter: 'Dino',
+    herCharacter: 'Dragon',
+    emoji: '🔥',
+    color: 'text-passion',
+    bgColor: 'bg-passion-light',
+    position: { top: '15%', left: '20%' },
+  },
+  {
+    id: 2,
+    name: 'Design Arena',
+    hisCharacter: 'Voltron',
+    herCharacter: 'Designer',
+    emoji: '🏠',
+    color: 'text-energy',
+    bgColor: 'bg-energy-light',
+    position: { top: '30%', left: '65%' },
+  },
+  {
+    id: 3,
+    name: 'Smooch Garden',
+    hisCharacter: 'Love Cell',
+    herCharacter: 'Love Cell',
+    emoji: '💕',
+    color: 'text-love',
+    bgColor: 'bg-love-light',
+    position: { top: '50%', left: '25%' },
+  },
+  {
+    id: 4,
+    name: 'Magic Tower',
+    hisCharacter: 'Wizzy',
+    herCharacter: 'Needy',
+    emoji: '✨',
+    color: 'text-magic',
+    bgColor: 'bg-magic-light',
+    position: { top: '55%', left: '70%' },
+  },
+  {
+    id: 5,
+    name: 'Dream Cloud',
+    hisCharacter: 'Nappy',
+    herCharacter: 'No-Sleep',
+    emoji: '☁️',
+    color: 'text-dream',
+    bgColor: 'bg-dream-light',
+    position: { top: '78%', left: '45%' },
+  },
+];
+
+export default function VillageMap() {
+  const navigate = useNavigate();
+  const { gameState, isLevelUnlocked } = useGame();
+
+  const handleLocationClick = (level: number) => {
+    if (isLevelUnlocked(level)) {
+      navigate(`/level/${level}`);
+    }
+  };
+
+  const handleFinaleClick = () => {
+    if (gameState.hasCompletedGame) {
+      navigate('/finale');
+    }
+  };
+
+  const completedCount = gameState.completedLevels.length;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-dream-light via-background to-nature-light relative overflow-hidden">
+      <FloatingHearts count={6} colors={['text-love', 'text-magic', 'text-dream']} />
+
+      {/* Header */}
+      <div className="text-center pt-6 pb-4 px-4 relative z-10">
+        <h1 className="text-3xl font-bold text-foreground mb-2">🏘️ Our Village</h1>
+        <div className="flex items-center justify-center gap-2 text-muted-foreground">
+          <Star className="w-4 h-4 text-energy" fill="currentColor" />
+          <span>{completedCount}/5 Levels Complete</span>
+          <Star className="w-4 h-4 text-energy" fill="currentColor" />
+        </div>
+      </div>
+
+      {/* Map Container */}
+      <div className="relative w-full h-[calc(100vh-140px)] max-w-2xl mx-auto px-4">
+        {/* Decorative path lines */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none">
+          <path
+            d="M 20% 20% Q 40% 25% 65% 35% Q 45% 45% 25% 55% Q 50% 60% 70% 60% Q 55% 70% 45% 82%"
+            fill="none"
+            stroke="hsl(var(--border))"
+            strokeWidth="4"
+            strokeDasharray="10,10"
+            className="opacity-50"
+          />
+        </svg>
+
+        {/* Level Locations */}
+        {locations.map((location) => {
+          const isUnlocked = isLevelUnlocked(location.id);
+          const isCompleted = gameState.completedLevels.includes(location.id);
+
+          return (
+            <button
+              key={location.id}
+              onClick={() => handleLocationClick(location.id)}
+              disabled={!isUnlocked}
+              className={cn(
+                "absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-10",
+                isUnlocked ? "cursor-pointer hover:scale-110" : "cursor-not-allowed opacity-60"
+              )}
+              style={{
+                top: location.position.top,
+                left: location.position.left,
+              }}
+            >
+              <div className={cn(
+                "rounded-2xl p-3 shadow-lg border-2 border-border",
+                location.bgColor,
+                isUnlocked && "animate-scale-in",
+                isCompleted && "ring-2 ring-nature ring-offset-2"
+              )}>
+                <div className="text-4xl mb-1">{location.emoji}</div>
+                <div className="text-xs font-bold text-foreground whitespace-nowrap">
+                  {location.name}
+                </div>
+                {isCompleted ? (
+                  <div className="absolute -top-2 -right-2 bg-nature text-nature-foreground rounded-full p-1">
+                    <Check className="w-4 h-4 text-white" />
+                  </div>
+                ) : !isUnlocked && (
+                  <div className="absolute -top-2 -right-2 bg-muted text-muted-foreground rounded-full p-1">
+                    <Lock className="w-4 h-4" />
+                  </div>
+                )}
+              </div>
+              <div className="mt-1 text-xs text-muted-foreground">
+                {location.hisCharacter} & {location.herCharacter}
+              </div>
+            </button>
+          );
+        })}
+
+        {/* Finale Location */}
+        <button
+          onClick={handleFinaleClick}
+          disabled={!gameState.hasCompletedGame}
+          className={cn(
+            "absolute bottom-4 left-1/2 transform -translate-x-1/2 transition-all duration-300 z-10",
+            gameState.hasCompletedGame 
+              ? "cursor-pointer hover:scale-110 animate-heart-beat" 
+              : "cursor-not-allowed opacity-40"
+          )}
+        >
+          <div className={cn(
+            "rounded-2xl p-4 shadow-xl border-4",
+            gameState.hasCompletedGame 
+              ? "bg-gradient-to-br from-love-light to-energy-light border-love" 
+              : "bg-muted border-border"
+          )}>
+            <div className="text-5xl mb-1">🎉</div>
+            <div className="text-sm font-bold text-foreground">Grand Finale</div>
+            <div className="text-xs text-muted-foreground">
+              {gameState.hasCompletedGame ? 'Ready to celebrate!' : `Complete all levels first`}
+            </div>
+          </div>
+        </button>
+      </div>
+
+      {/* Bottom hint */}
+      <div className="fixed bottom-4 left-0 right-0 text-center text-muted-foreground text-sm px-4">
+        Tap a location to begin! 💫
+      </div>
+    </div>
+  );
+}
