@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 import level3Bg from '@/assets/backgrounds/level3-bg.png';
 import level3Photo from '@/assets/photos/level3-jeju.png';
 
-const GIFT_MESSAGE = "Our love cells are forever connected - times like that magical day in Jeju with our little orange car to every adventure we share. You are my heart's home. 💕";
+const GIFT_MESSAGE = "Our love cells are forever connected - times like that magical trip in Jeju with our little orange car to every adventure we share. You are my heart's home. 💕";
 const GIFT_PHOTO = level3Photo;
 
 export default function Level3() {
