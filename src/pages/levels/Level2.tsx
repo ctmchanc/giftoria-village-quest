@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Home, Zap } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useGame } from '@/contexts/GameContext';
 import { DialogueBubble } from '@/components/game/DialogueBubble';
 import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
+import level2Bg from '@/assets/backgrounds/level2-bg.png';
 
 interface HiddenItem {
   id: number;
@@ -68,21 +69,16 @@ export default function Level2() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-energy-light via-background to-magic-light relative overflow-hidden">
-      {/* Floating elements */}
-      {Array.from({ length: 4 }).map((_, i) => (
-        <Zap
-          key={i}
-          className="absolute text-energy opacity-30 float-animation"
-          style={{
-            left: `${15 + i * 20}%`,
-            top: `${15 + (i % 2) * 40}%`,
-            animationDelay: `${i * 0.3}s`,
-            width: 18 + i * 3,
-            height: 18 + i * 3,
-          }}
-        />
-      ))}
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${level2Bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-background/20" />
 
       {/* Header */}
       <div className="flex items-center justify-between p-4 relative z-10">
@@ -90,11 +86,13 @@ export default function Level2() {
           variant="ghost"
           size="icon"
           onClick={() => navigate('/map')}
-          className="text-foreground"
+          className="text-foreground bg-card/50 backdrop-blur-sm"
         >
           <ArrowLeft className="w-6 h-6" />
         </Button>
-        <h1 className="text-xl font-bold text-foreground">🏠 Design Arena</h1>
+        <div className="bg-card/80 backdrop-blur-sm rounded-full px-4 py-2">
+          <h1 className="text-xl font-bold text-foreground">🏠 Design Arena</h1>
+        </div>
         <div className="w-10" />
       </div>
 
@@ -103,11 +101,11 @@ export default function Level2() {
         <div className="flex justify-center gap-8 mb-6">
           <div className="text-center">
             <CharacterSprite character="voltron" size="lg" />
-            <p className="text-sm font-bold text-energy mt-2">Voltron</p>
+            <p className="text-sm font-bold text-energy mt-2 drop-shadow-md">Voltron</p>
           </div>
           <div className="text-center">
             <CharacterSprite character="designer" size="lg" />
-            <p className="text-sm font-bold text-magic mt-2">Designer</p>
+            <p className="text-sm font-bold text-magic mt-2 drop-shadow-md">Designer</p>
           </div>
         </div>
 
@@ -125,27 +123,23 @@ export default function Level2() {
         {/* Puzzle */}
         {stage === 'puzzle' && (
           <div className="animate-fade-in">
-            <div className="bg-card rounded-2xl p-4 shadow-lg border-2 border-energy-light mb-6">
+            <div className="bg-card/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border-2 border-energy-light mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-foreground">
                   Find the Hidden Items!
                 </h2>
-                <span className="text-sm font-bold text-energy">
+                <span className="text-sm font-bold text-energy bg-energy-light px-3 py-1 rounded-full">
                   {foundItems.length}/{items.length}
                 </span>
               </div>
               
-              {/* Messy room scene */}
-              <div className="relative bg-gradient-to-br from-energy-light to-magic-light rounded-xl h-72 overflow-hidden">
-                {/* Room decorations */}
-                <Home className="absolute top-4 right-4 w-12 h-12 text-magic/30" />
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-foreground/10" />
-                
-                {/* Mess elements */}
-                <span className="absolute top-8 left-8 text-2xl opacity-50">🛋️</span>
-                <span className="absolute top-12 right-16 text-xl opacity-50">🎮</span>
-                <span className="absolute bottom-20 left-12 text-xl opacity-50">📦</span>
-                <span className="absolute bottom-24 right-8 text-xl opacity-50">🧸</span>
+              {/* Scene with hidden items */}
+              <div className="relative rounded-xl h-72 overflow-hidden border-2 border-border">
+                <img 
+                  src={level2Bg} 
+                  alt="Room scene" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
                 
                 {/* Hidden items */}
                 {items.map((item) => (
@@ -174,7 +168,7 @@ export default function Level2() {
 
             {allFound && !isCompleted && (
               <div className="text-center animate-scale-in">
-                <p className="text-lg text-foreground mb-4">
+                <p className="text-lg text-foreground mb-4 drop-shadow-md font-medium">
                   🎉 Room looking better! Maybe opposites DO attract!
                 </p>
                 <Button
@@ -189,11 +183,11 @@ export default function Level2() {
 
             {isCompleted && (
               <div className="text-center">
-                <p className="text-nature font-bold mb-4">✅ Level Complete!</p>
+                <p className="text-nature font-bold mb-4 drop-shadow-md">✅ Level Complete!</p>
                 <Button
                   onClick={() => navigate('/map')}
                   variant="outline"
-                  className="rounded-full"
+                  className="rounded-full bg-card/80"
                 >
                   Return to Map
                 </Button>

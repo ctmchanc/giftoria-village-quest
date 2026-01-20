@@ -7,6 +7,7 @@ import { DialogueBubble } from '@/components/game/DialogueBubble';
 import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
+import level3Bg from '@/assets/backgrounds/level3-bg.png';
 
 const GIFT_MESSAGE = "[Your heartfelt love letter goes here - tell him how much he means to you! 💕]";
 
@@ -73,14 +74,24 @@ export default function Level3() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-love-light via-background to-love-light relative overflow-hidden">
-      {/* Floating hearts */}
-      {Array.from({ length: 10 }).map((_, i) => (
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${level3Bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-background/20" />
+
+      {/* Floating hearts decoration */}
+      {Array.from({ length: 8 }).map((_, i) => (
         <Heart
           key={i}
-          className="absolute text-love opacity-30 float-animation"
+          className="absolute text-love opacity-40 float-animation"
           style={{
-            left: `${5 + i * 10}%`,
+            left: `${5 + i * 12}%`,
             top: `${10 + (i % 4) * 20}%`,
             animationDelay: `${i * 0.3}s`,
             width: 14 + i * 2,
@@ -96,11 +107,13 @@ export default function Level3() {
           variant="ghost"
           size="icon"
           onClick={() => navigate('/map')}
-          className="text-foreground"
+          className="text-foreground bg-card/50 backdrop-blur-sm"
         >
           <ArrowLeft className="w-6 h-6" />
         </Button>
-        <h1 className="text-xl font-bold text-foreground">💕 Smooch Garden</h1>
+        <div className="bg-card/80 backdrop-blur-sm rounded-full px-4 py-2">
+          <h1 className="text-xl font-bold text-foreground">💕 Smooch Garden</h1>
+        </div>
         <div className="w-10" />
       </div>
 
@@ -109,11 +122,11 @@ export default function Level3() {
         <div className="flex justify-center gap-8 mb-6">
           <div className="text-center">
             <CharacterSprite character="hisLove" size="lg" />
-            <p className="text-sm font-bold text-secondary mt-2">His Love</p>
+            <p className="text-sm font-bold text-secondary mt-2 drop-shadow-md">His Love</p>
           </div>
           <div className="text-center">
             <CharacterSprite character="herLove" size="lg" />
-            <p className="text-sm font-bold text-love mt-2">Her Love</p>
+            <p className="text-sm font-bold text-love mt-2 drop-shadow-md">Her Love</p>
           </div>
         </div>
 
@@ -131,22 +144,23 @@ export default function Level3() {
         {/* Puzzle */}
         {stage === 'puzzle' && (
           <div className="animate-fade-in">
-            <div className="bg-card rounded-2xl p-4 shadow-lg border-2 border-love-light mb-6">
+            <div className="bg-card/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border-2 border-love-light mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-foreground">
                   Connect the Hearts! 💕
                 </h2>
-                <span className="text-sm font-bold text-love">
+                <span className="text-sm font-bold text-love bg-love-light px-3 py-1 rounded-full">
                   {connectedHearts.length / 2}/3 pairs
                 </span>
               </div>
               
               {/* Heart garden */}
-              <div className="relative bg-gradient-to-br from-love-light to-secondary/20 rounded-xl h-80 overflow-hidden">
-                {/* Garden decorations */}
-                <span className="absolute bottom-2 left-4 text-2xl">🌸</span>
-                <span className="absolute bottom-4 right-8 text-xl">🌷</span>
-                <span className="absolute top-4 left-1/2 text-lg">🦋</span>
+              <div className="relative rounded-xl h-80 overflow-hidden border-2 border-love-light">
+                <img 
+                  src={level3Bg} 
+                  alt="Garden scene" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
                 
                 {/* Hearts */}
                 {hearts.map((heart) => {
@@ -184,7 +198,7 @@ export default function Level3() {
 
             {allConnected && !isCompleted && (
               <div className="text-center animate-scale-in">
-                <p className="text-lg text-foreground mb-4">
+                <p className="text-lg text-foreground mb-4 drop-shadow-md font-medium">
                   🥰 All hearts connected! Love is in the air!
                 </p>
                 <Button
@@ -199,11 +213,11 @@ export default function Level3() {
 
             {isCompleted && (
               <div className="text-center">
-                <p className="text-nature font-bold mb-4">✅ Level Complete!</p>
+                <p className="text-nature font-bold mb-4 drop-shadow-md">✅ Level Complete!</p>
                 <Button
                   onClick={() => navigate('/map')}
                   variant="outline"
-                  className="rounded-full"
+                  className="rounded-full bg-card/80"
                 >
                   Return to Map
                 </Button>

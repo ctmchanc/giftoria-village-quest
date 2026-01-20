@@ -4,6 +4,7 @@ import { Lock, Check, Star } from 'lucide-react';
 import { useGame } from '@/contexts/GameContext';
 import { FloatingHearts } from '@/components/game/FloatingHearts';
 import { cn } from '@/lib/utils';
+import villageMapBg from '@/assets/backgrounds/village-map-bg.png';
 
 interface LevelLocation {
   id: number;
@@ -88,33 +89,33 @@ export default function VillageMap() {
   const completedCount = gameState.completedLevels.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-dream-light via-background to-nature-light relative overflow-hidden">
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${villageMapBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-background/20" />
+      
       <FloatingHearts count={6} colors={['text-love', 'text-magic', 'text-dream']} />
 
       {/* Header */}
       <div className="text-center pt-6 pb-4 px-4 relative z-10">
-        <h1 className="text-3xl font-bold text-foreground mb-2">🏘️ Our Village</h1>
-        <div className="flex items-center justify-center gap-2 text-muted-foreground">
-          <Star className="w-4 h-4 text-energy" fill="currentColor" />
-          <span>{completedCount}/5 Levels Complete</span>
-          <Star className="w-4 h-4 text-energy" fill="currentColor" />
+        <div className="bg-card/90 backdrop-blur-sm rounded-2xl py-3 px-6 inline-block shadow-lg">
+          <h1 className="text-3xl font-bold text-foreground mb-2">🏘️ Our Village</h1>
+          <div className="flex items-center justify-center gap-2 text-muted-foreground">
+            <Star className="w-4 h-4 text-energy" fill="currentColor" />
+            <span>{completedCount}/5 Levels Complete</span>
+            <Star className="w-4 h-4 text-energy" fill="currentColor" />
+          </div>
         </div>
       </div>
 
       {/* Map Container */}
       <div className="relative w-full h-[calc(100vh-140px)] max-w-2xl mx-auto px-4">
-        {/* Decorative path lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none">
-          <path
-            d="M 20% 20% Q 40% 25% 65% 35% Q 45% 45% 25% 55% Q 50% 60% 70% 60% Q 55% 70% 45% 82%"
-            fill="none"
-            stroke="hsl(var(--border))"
-            strokeWidth="4"
-            strokeDasharray="10,10"
-            className="opacity-50"
-          />
-        </svg>
-
         {/* Level Locations */}
         {locations.map((location) => {
           const isUnlocked = isLevelUnlocked(location.id);
@@ -135,7 +136,7 @@ export default function VillageMap() {
               }}
             >
               <div className={cn(
-                "rounded-2xl p-3 shadow-lg border-2 border-border",
+                "rounded-2xl p-3 shadow-lg border-2 border-border backdrop-blur-sm",
                 location.bgColor,
                 isUnlocked && "animate-scale-in",
                 isCompleted && "ring-2 ring-nature ring-offset-2"
@@ -154,7 +155,7 @@ export default function VillageMap() {
                   </div>
                 )}
               </div>
-              <div className="mt-1 text-xs text-muted-foreground">
+              <div className="mt-1 text-xs text-foreground font-medium drop-shadow-md">
                 {location.hisCharacter} & {location.herCharacter}
               </div>
             </button>
@@ -173,7 +174,7 @@ export default function VillageMap() {
           )}
         >
           <div className={cn(
-            "rounded-2xl p-4 shadow-xl border-4",
+            "rounded-2xl p-4 shadow-xl border-4 backdrop-blur-sm",
             gameState.hasCompletedGame 
               ? "bg-gradient-to-br from-love-light to-energy-light border-love" 
               : "bg-muted border-border"
@@ -188,7 +189,7 @@ export default function VillageMap() {
       </div>
 
       {/* Bottom hint */}
-      <div className="fixed bottom-4 left-0 right-0 text-center text-muted-foreground text-sm px-4">
+      <div className="fixed bottom-4 left-0 right-0 text-center text-foreground text-sm px-4 font-medium drop-shadow-md">
         Tap a location to begin! 💫
       </div>
     </div>

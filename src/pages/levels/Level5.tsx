@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Cloud, Moon, Sparkles } from 'lucide-react';
+import { ArrowLeft, Moon, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useGame } from '@/contexts/GameContext';
 import { DialogueBubble } from '@/components/game/DialogueBubble';
 import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
+import level5Bg from '@/assets/backgrounds/level5-bg.png';
 
 const GIFT_MESSAGE = "[Your cozy message about peaceful moments together goes here - falling asleep in each other's arms! ☁️😴]";
 
@@ -18,7 +19,7 @@ export default function Level5() {
   const [showGift, setShowGift] = useState(false);
   const [sleepMeter, setSleepMeter] = useState(0);
   const [isTapping, setIsTapping] = useState(false);
-  const [cudding, setCuddling] = useState(false);
+  const [cuddling, setCuddling] = useState(false);
   const isCompleted = gameState.completedLevels.includes(5);
 
   const dialogues = [
@@ -31,7 +32,7 @@ export default function Level5() {
   const goalSleep = 100;
 
   useEffect(() => {
-    if (stage !== 'puzzle' || isCompleted || cudding) return;
+    if (stage !== 'puzzle' || isCompleted || cuddling) return;
 
     const interval = setInterval(() => {
       if (isTapping) {
@@ -42,13 +43,13 @@ export default function Level5() {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [stage, isTapping, isCompleted, cudding]);
+  }, [stage, isTapping, isCompleted, cuddling]);
 
   useEffect(() => {
-    if (sleepMeter >= goalSleep && !cudding) {
+    if (sleepMeter >= goalSleep && !cuddling) {
       setCuddling(true);
     }
-  }, [sleepMeter, cudding]);
+  }, [sleepMeter, cuddling]);
 
   const handleDialogueClick = () => {
     if (dialogueIndex < dialogues.length - 1) {
@@ -73,27 +74,22 @@ export default function Level5() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-dream-light via-background to-dream-light relative overflow-hidden">
-      {/* Floating clouds */}
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Cloud
-          key={i}
-          className="absolute text-secondary opacity-40 float-animation"
-          style={{
-            left: `${5 + i * 20}%`,
-            top: `${10 + (i % 3) * 15}%`,
-            animationDelay: `${i * 0.5}s`,
-            width: 30 + i * 8,
-            height: 30 + i * 8,
-          }}
-        />
-      ))}
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${level5Bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-background/20" />
 
       {/* Stars */}
       {Array.from({ length: 6 }).map((_, i) => (
         <Sparkles
           key={`star-${i}`}
-          className="absolute text-energy opacity-50 sparkle"
+          className="absolute text-energy opacity-60 sparkle"
           style={{
             left: `${15 + i * 15}%`,
             top: `${5 + (i % 2) * 10}%`,
@@ -110,11 +106,13 @@ export default function Level5() {
           variant="ghost"
           size="icon"
           onClick={() => navigate('/map')}
-          className="text-foreground"
+          className="text-foreground bg-card/50 backdrop-blur-sm"
         >
           <ArrowLeft className="w-6 h-6" />
         </Button>
-        <h1 className="text-xl font-bold text-foreground">☁️ Dream Cloud</h1>
+        <div className="bg-card/80 backdrop-blur-sm rounded-full px-4 py-2">
+          <h1 className="text-xl font-bold text-foreground">☁️ Dream Cloud</h1>
+        </div>
         <div className="w-10" />
       </div>
 
@@ -123,11 +121,11 @@ export default function Level5() {
         <div className="flex justify-center gap-8 mb-6">
           <div className="text-center">
             <CharacterSprite character="nappy" size="lg" />
-            <p className="text-sm font-bold text-dream mt-2">Nappy</p>
+            <p className="text-sm font-bold text-dream mt-2 drop-shadow-md">Nappy</p>
           </div>
           <div className="text-center">
             <CharacterSprite character="noSleep" size="lg" />
-            <p className="text-sm font-bold text-energy mt-2">No-Sleep</p>
+            <p className="text-sm font-bold text-energy mt-2 drop-shadow-md">No-Sleep</p>
           </div>
         </div>
 
@@ -145,10 +143,10 @@ export default function Level5() {
         {/* Puzzle */}
         {stage === 'puzzle' && (
           <div className="animate-fade-in">
-            <div className="bg-card rounded-2xl p-4 shadow-lg border-2 border-dream-light mb-6">
+            <div className="bg-card/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border-2 border-dream-light mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-foreground">
-                  {cudding ? "Cuddling... 💤" : "Get Cozy Together!"}
+                  {cuddling ? "Cuddling... 💤" : "Get Cozy Together!"}
                 </h2>
                 <div className="flex items-center gap-2">
                   <Moon className="w-5 h-5 text-dream" />
@@ -164,8 +162,8 @@ export default function Level5() {
               {/* Cloud scene */}
               <div 
                 className={cn(
-                  "relative bg-gradient-to-b from-dream-light to-secondary/30 rounded-xl h-72 overflow-hidden",
-                  !cudding && "cursor-pointer"
+                  "relative rounded-xl h-72 overflow-hidden border-2 border-dream-light",
+                  !cuddling && "cursor-pointer"
                 )}
                 onMouseDown={handleTapStart}
                 onMouseUp={handleTapEnd}
@@ -173,60 +171,54 @@ export default function Level5() {
                 onTouchStart={handleTapStart}
                 onTouchEnd={handleTapEnd}
               >
-                {/* Moon */}
-                <div className="absolute top-4 right-6">
-                  <Moon className="w-10 h-10 text-energy" fill="currentColor" />
-                </div>
-                
-                {/* Cloud bed */}
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-                  <Cloud className="w-48 h-24 text-white" fill="white" />
-                </div>
+                <img 
+                  src={level5Bg} 
+                  alt="Dream clouds" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
                 
                 {/* Characters */}
-                {!cudding ? (
-                  <>
-                    <div 
-                      className="absolute bottom-20 left-1/3 text-5xl"
-                      style={{ transform: 'translateX(-50%)' }}
-                    >
-                      😴
+                {!cuddling ? (
+                  <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex items-end gap-8">
+                    <div className="transform translate-y-4">
+                      <CharacterSprite character="nappy" size="lg" />
                     </div>
-                    <div 
-                      className={cn(
-                        "absolute bottom-20 left-2/3 text-5xl transition-all duration-300",
-                        isTapping ? "translate-x-[-30px] scale-110" : ""
-                      )}
-                      style={{ transform: 'translateX(-50%)' }}
-                    >
-                      {isTapping ? "😊" : "⚡"}
+                    <div className={cn(
+                      "transition-all duration-300",
+                      isTapping ? "translate-x-[-30px] scale-110" : ""
+                    )}>
+                      <CharacterSprite character="noSleep" size="lg" />
                     </div>
-                  </>
+                  </div>
                 ) : (
-                  <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center animate-scale-in">
-                    <div className="text-5xl mb-2">😴💕😊</div>
-                    <div className="text-2xl animate-pulse">💤 Zzz...</div>
+                  <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center animate-scale-in">
+                    <div className="flex items-end justify-center gap-2">
+                      <CharacterSprite character="nappy" size="lg" />
+                      <div className="text-4xl animate-heart-beat">💕</div>
+                      <CharacterSprite character="noSleep" size="lg" />
+                    </div>
+                    <div className="text-3xl mt-2 animate-pulse">💤 Zzz...</div>
                   </div>
                 )}
 
                 {/* Zzz bubbles when tapping */}
-                {isTapping && !cudding && (
-                  <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2">
-                    <span className="text-2xl animate-fade-in">💤</span>
+                {isTapping && !cuddling && (
+                  <div className="absolute bottom-40 left-1/2 transform -translate-x-1/2">
+                    <span className="text-3xl animate-fade-in">💤</span>
                   </div>
                 )}
               </div>
               
               <p className="text-sm text-muted-foreground text-center mt-3">
-                {cudding 
+                {cuddling 
                   ? "They fell asleep together... how sweet! 💕" 
                   : "Hold/tap to help them get cozy!"}
               </p>
             </div>
 
-            {cudding && !isCompleted && (
+            {cuddling && !isCompleted && (
               <div className="text-center animate-scale-in">
-                <p className="text-lg text-foreground mb-4">
+                <p className="text-lg text-foreground mb-4 drop-shadow-md font-medium">
                   ☁️ They're cuddling peacefully! So wholesome!
                 </p>
                 <Button
@@ -241,11 +233,11 @@ export default function Level5() {
 
             {isCompleted && (
               <div className="text-center">
-                <p className="text-nature font-bold mb-4">✅ Level Complete!</p>
+                <p className="text-nature font-bold mb-4 drop-shadow-md">✅ Level Complete!</p>
                 <Button
                   onClick={() => navigate('/map')}
                   variant="outline"
-                  className="rounded-full"
+                  className="rounded-full bg-card/80"
                 >
                   Return to Map
                 </Button>
