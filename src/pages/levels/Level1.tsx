@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Flame } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useGame } from '@/contexts/GameContext';
 import { DialogueBubble } from '@/components/game/DialogueBubble';
 import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
+import level1Bg from '@/assets/backgrounds/level1-bg.png';
 
 interface MatchItem {
   id: number;
@@ -89,21 +90,16 @@ export default function Level1() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-passion-light via-background to-passion-light relative overflow-hidden">
-      {/* Floating flames */}
-      {Array.from({ length: 6 }).map((_, i) => (
-        <Flame
-          key={i}
-          className="absolute text-passion opacity-30 float-animation"
-          style={{
-            left: `${10 + i * 15}%`,
-            top: `${20 + (i % 3) * 25}%`,
-            animationDelay: `${i * 0.5}s`,
-            width: 20 + i * 4,
-            height: 20 + i * 4,
-          }}
-        />
-      ))}
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${level1Bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-background/30" />
 
       {/* Header */}
       <div className="flex items-center justify-between p-4 relative z-10">
@@ -111,11 +107,13 @@ export default function Level1() {
           variant="ghost"
           size="icon"
           onClick={() => navigate('/map')}
-          className="text-foreground"
+          className="text-foreground bg-card/50 backdrop-blur-sm"
         >
           <ArrowLeft className="w-6 h-6" />
         </Button>
-        <h1 className="text-xl font-bold text-foreground">🔥 Passion Peak</h1>
+        <div className="bg-card/80 backdrop-blur-sm rounded-full px-4 py-2">
+          <h1 className="text-xl font-bold text-foreground">🔥 Passion Peak</h1>
+        </div>
         <div className="w-10" />
       </div>
 
@@ -124,11 +122,11 @@ export default function Level1() {
         <div className="flex justify-center gap-8 mb-6">
           <div className="text-center">
             <CharacterSprite character="dino" size="lg" />
-            <p className="text-sm font-bold text-passion mt-2">Dino</p>
+            <p className="text-sm font-bold text-passion mt-2 drop-shadow-md">Dino</p>
           </div>
           <div className="text-center">
             <CharacterSprite character="dragon" size="lg" />
-            <p className="text-sm font-bold text-love mt-2">Dragon</p>
+            <p className="text-sm font-bold text-love mt-2 drop-shadow-md">Dragon</p>
           </div>
         </div>
 
@@ -147,7 +145,7 @@ export default function Level1() {
         {/* Puzzle */}
         {stage === 'puzzle' && (
           <div className="animate-fade-in">
-            <div className="bg-card rounded-2xl p-6 shadow-lg border-2 border-passion-light mb-6">
+            <div className="bg-card/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border-2 border-passion-light mb-6">
               <h2 className="text-lg font-bold text-center text-foreground mb-4">
                 Match the Passion Pairs! 🔥
               </h2>
@@ -174,7 +172,7 @@ export default function Level1() {
 
             {allMatched && !isCompleted && (
               <div className="text-center animate-scale-in">
-                <p className="text-lg text-foreground mb-4">
+                <p className="text-lg text-foreground mb-4 drop-shadow-md font-medium">
                   🎉 Perfect match! The passion is real!
                 </p>
                 <Button
@@ -189,11 +187,11 @@ export default function Level1() {
 
             {isCompleted && (
               <div className="text-center">
-                <p className="text-nature font-bold mb-4">✅ Level Complete!</p>
+                <p className="text-nature font-bold mb-4 drop-shadow-md">✅ Level Complete!</p>
                 <Button
                   onClick={() => navigate('/map')}
                   variant="outline"
-                  className="rounded-full"
+                  className="rounded-full bg-card/80"
                 >
                   Return to Map
                 </Button>

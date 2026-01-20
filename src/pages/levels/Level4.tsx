@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Sparkles, Star } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useGame } from '@/contexts/GameContext';
 import { DialogueBubble } from '@/components/game/DialogueBubble';
 import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
+import level4Bg from '@/assets/backgrounds/level4-bg.png';
 
 const GIFT_MESSAGE = "[Your sweet message about togetherness goes here - about how you love being near him! ✨🥺]";
 
@@ -32,7 +33,7 @@ export default function Level4() {
     Math.pow(wizzyPosition.y - needyPosition.y, 2)
   );
   const isClose = distance < 25;
-  const goalTicks = 30; // About 3 seconds of staying close
+  const goalTicks = 30;
 
   useEffect(() => {
     if (stage !== 'puzzle' || isCompleted) return;
@@ -102,14 +103,24 @@ export default function Level4() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-magic-light via-background to-magic-light relative overflow-hidden">
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${level4Bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-background/30" />
+
       {/* Floating sparkles */}
-      {Array.from({ length: 8 }).map((_, i) => (
+      {Array.from({ length: 6 }).map((_, i) => (
         <Sparkles
           key={i}
-          className="absolute text-magic opacity-40 sparkle"
+          className="absolute text-energy opacity-50 sparkle"
           style={{
-            left: `${10 + i * 12}%`,
+            left: `${10 + i * 15}%`,
             top: `${15 + (i % 3) * 25}%`,
             animationDelay: `${i * 0.2}s`,
             width: 16 + i * 2,
@@ -124,11 +135,13 @@ export default function Level4() {
           variant="ghost"
           size="icon"
           onClick={() => navigate('/map')}
-          className="text-foreground"
+          className="text-foreground bg-card/50 backdrop-blur-sm"
         >
           <ArrowLeft className="w-6 h-6" />
         </Button>
-        <h1 className="text-xl font-bold text-foreground">✨ Magic Tower</h1>
+        <div className="bg-card/80 backdrop-blur-sm rounded-full px-4 py-2">
+          <h1 className="text-xl font-bold text-foreground">✨ Magic Tower</h1>
+        </div>
         <div className="w-10" />
       </div>
 
@@ -137,11 +150,11 @@ export default function Level4() {
         <div className="flex justify-center gap-8 mb-6">
           <div className="text-center">
             <CharacterSprite character="wizzy" size="lg" />
-            <p className="text-sm font-bold text-magic mt-2">Wizzy</p>
+            <p className="text-sm font-bold text-magic mt-2 drop-shadow-md">Wizzy</p>
           </div>
           <div className="text-center">
             <CharacterSprite character="needy" size="lg" />
-            <p className="text-sm font-bold text-love mt-2">Needy</p>
+            <p className="text-sm font-bold text-love mt-2 drop-shadow-md">Needy</p>
           </div>
         </div>
 
@@ -159,7 +172,7 @@ export default function Level4() {
         {/* Puzzle */}
         {stage === 'puzzle' && (
           <div className="animate-fade-in">
-            <div className="bg-card rounded-2xl p-4 shadow-lg border-2 border-magic-light mb-6">
+            <div className="bg-card/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border-2 border-magic-light mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-foreground">
                   Stay Close to Wizzy! 🥺
@@ -179,31 +192,32 @@ export default function Level4() {
               
               {/* Magic tower scene */}
               <div 
-                className="puzzle-container relative bg-gradient-to-b from-magic-light to-dream-light rounded-xl h-72 overflow-hidden cursor-pointer touch-none"
+                className="puzzle-container relative rounded-xl h-72 overflow-hidden cursor-pointer touch-none border-2 border-magic-light"
                 onMouseMove={handleDrag}
                 onTouchMove={handleDrag}
               >
-                {/* Tower elements */}
-                <Star className="absolute top-2 right-4 w-6 h-6 text-energy sparkle" fill="currentColor" />
-                <span className="absolute bottom-4 left-4 text-xl">📜</span>
-                <span className="absolute top-8 left-8 text-lg">⭐</span>
+                <img 
+                  src={level4Bg} 
+                  alt="Magic tower" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
                 
                 {/* Wizzy (moves on its own) */}
                 <div
-                  className="absolute text-5xl transition-all duration-500 ease-out"
+                  className="absolute transition-all duration-500 ease-out w-16 h-16"
                   style={{
                     left: `${wizzyPosition.x}%`,
                     top: `${wizzyPosition.y}%`,
                     transform: 'translate(-50%, -50%)',
                   }}
                 >
-                  🧙
+                  <CharacterSprite character="wizzy" size="sm" animate={false} />
                 </div>
                 
                 {/* Needy (controlled by player) */}
                 <div
                   className={cn(
-                    "absolute text-5xl transition-all duration-100",
+                    "absolute transition-all duration-100 w-16 h-16",
                     isClose && "animate-heart-beat"
                   )}
                   style={{
@@ -212,7 +226,7 @@ export default function Level4() {
                     transform: 'translate(-50%, -50%)',
                   }}
                 >
-                  🥺
+                  <CharacterSprite character="needy" size="sm" animate={false} />
                 </div>
                 
                 {/* Connection line when close */}
@@ -225,7 +239,7 @@ export default function Level4() {
                         x2={`${wizzyPosition.x}%`}
                         y2={`${wizzyPosition.y}%`}
                         stroke="hsl(var(--love))"
-                        strokeWidth="2"
+                        strokeWidth="3"
                         strokeDasharray="5,5"
                         className="animate-pulse"
                       />
@@ -241,7 +255,7 @@ export default function Level4() {
 
             {puzzleComplete && !isCompleted && (
               <div className="text-center animate-scale-in">
-                <p className="text-lg text-foreground mb-4">
+                <p className="text-lg text-foreground mb-4 drop-shadow-md font-medium">
                   ✨ You stayed together! He secretly loves her company!
                 </p>
                 <Button
@@ -256,11 +270,11 @@ export default function Level4() {
 
             {isCompleted && (
               <div className="text-center">
-                <p className="text-nature font-bold mb-4">✅ Level Complete!</p>
+                <p className="text-nature font-bold mb-4 drop-shadow-md">✅ Level Complete!</p>
                 <Button
                   onClick={() => navigate('/map')}
                   variant="outline"
-                  className="rounded-full"
+                  className="rounded-full bg-card/80"
                 >
                   Return to Map
                 </Button>
