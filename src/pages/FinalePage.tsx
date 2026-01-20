@@ -126,7 +126,7 @@ export default function FinalePage() {
               
               <p>From my villagers, we love you and I love you. I'm so proud of the man you have been and the man you'll continue to become. 💕</p>
               
-              <p className="text-right italic mt-6">Your lil guava 🥑</p>
+              <p className="text-right italic mt-6">Your lil guava 🍠</p>
             </div>
           </div>
 
