@@ -8,6 +8,7 @@ import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
 import level2Bg from '@/assets/backgrounds/level2-bg.png';
+import level2Photo from '@/assets/photos/level2-socks.png';
 
 interface HiddenItem {
   id: number;
@@ -17,7 +18,7 @@ interface HiddenItem {
 }
 
 const GIFT_MESSAGE = "Hi Voltron, I'm waiting for the day you sweep with your feet as you walk around our village instead of sneakily leaving socks everywherreeee. 🧦😤💕";
-const GIFT_PHOTO = ""; // Add your photo URL here!
+const GIFT_PHOTO = level2Photo;
 
 export default function Level2() {
   const navigate = useNavigate();
