@@ -9,7 +9,7 @@ import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
 import level5Bg from '@/assets/backgrounds/level5-bg.png';
 
-const GIFT_MESSAGE = "Baby, you're doing more than enough and I hope that the turnip, the teenage turnip and the now you will always remember that you can slow down and live life knowing that you are amazing just as you are. I know that so I always hope that you remember that and don't put so much pressure on yourself. You are a success just for being you. I love you 💕";
+const GIFT_MESSAGE = "Baby nap cell deserves an award for sleeping so much and holding down the fort. This year I hope you get to sleeeeeeep and rest and relax ample, and hang out with my no sleep cell 💤";
 const GIFT_PHOTO = "";
 
 export default function Level5() {
