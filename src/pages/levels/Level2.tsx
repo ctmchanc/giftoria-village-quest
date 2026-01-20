@@ -17,6 +17,7 @@ interface HiddenItem {
 }
 
 const GIFT_MESSAGE = "[Your funny message about your differences goes here - the chaos and the calm! 🏠🤖]";
+const GIFT_PHOTO = ""; // Add your photo URL here!
 
 export default function Level2() {
   const navigate = useNavigate();
@@ -201,6 +202,7 @@ export default function Level2() {
         <GiftReveal
           level={2}
           message={GIFT_MESSAGE}
+          photoUrl={GIFT_PHOTO || undefined}
           onClose={handleGiftClose}
         />
       )}
