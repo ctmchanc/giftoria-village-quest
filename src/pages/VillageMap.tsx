@@ -26,7 +26,7 @@ const locations: LevelLocation[] = [
     emoji: '🔥',
     color: 'text-passion',
     bgColor: 'bg-passion-light',
-    position: { top: '15%', left: '20%' },
+    position: { top: '10%', left: '25%' },
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const locations: LevelLocation[] = [
     emoji: '🏠',
     color: 'text-energy',
     bgColor: 'bg-energy-light',
-    position: { top: '30%', left: '65%' },
+    position: { top: '12%', left: '75%' },
   },
   {
     id: 3,
@@ -46,7 +46,7 @@ const locations: LevelLocation[] = [
     emoji: '💕',
     color: 'text-love',
     bgColor: 'bg-love-light',
-    position: { top: '50%', left: '25%' },
+    position: { top: '35%', left: '20%' },
   },
   {
     id: 4,
@@ -56,7 +56,7 @@ const locations: LevelLocation[] = [
     emoji: '✨',
     color: 'text-magic',
     bgColor: 'bg-magic-light',
-    position: { top: '55%', left: '70%' },
+    position: { top: '38%', left: '80%' },
   },
   {
     id: 5,
@@ -66,7 +66,7 @@ const locations: LevelLocation[] = [
     emoji: '☁️',
     color: 'text-dream',
     bgColor: 'bg-dream-light',
-    position: { top: '78%', left: '45%' },
+    position: { top: '60%', left: '50%' },
   },
 ];
 
@@ -167,11 +167,12 @@ export default function VillageMap() {
           onClick={handleFinaleClick}
           disabled={!gameState.hasCompletedGame}
           className={cn(
-            "absolute bottom-4 left-1/2 transform -translate-x-1/2 transition-all duration-300 z-10",
+            "absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-10",
             gameState.hasCompletedGame 
               ? "cursor-pointer hover:scale-110 animate-heart-beat" 
               : "cursor-not-allowed opacity-40"
           )}
+          style={{ top: '85%' }}
         >
           <div className={cn(
             "rounded-2xl p-4 shadow-xl border-4 backdrop-blur-sm",
