@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Sparkles, Star } from 'lucide-react';
+import { Heart, Sparkles, Star, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { useGame } from '@/contexts/GameContext';
 import { FloatingHearts } from '@/components/game/FloatingHearts';
 import introBg from '@/assets/backgrounds/intro-bg.png';
+
+const CORRECT_PASSWORD = 'thirtyfineee';
 
 export default function IntroPage() {
   const navigate = useNavigate();
   const { markIntroSeen } = useGame();
   const [step, setStep] = useState(0);
   const [showButton, setShowButton] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    if (!isUnlocked) return;
+    
     const timer = setTimeout(() => {
       if (step < 3) {
         setStep(step + 1);
@@ -22,12 +30,73 @@ export default function IntroPage() {
     }, 1200);
 
     return () => clearTimeout(timer);
-  }, [step]);
+  }, [step, isUnlocked]);
 
   const handleStart = () => {
     markIntroSeen();
     navigate('/map');
   };
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password.toLowerCase() === CORRECT_PASSWORD.toLowerCase()) {
+      setIsUnlocked(true);
+      setError('');
+    } else {
+      setError('Wrong password, try again! 💔');
+    }
+  };
+
+  // Password Gate
+  if (!isUnlocked) {
+    return (
+      <div 
+        className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden"
+        style={{
+          backgroundImage: `url(${introBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-background/50 backdrop-blur-sm" />
+        
+        <FloatingHearts count={8} />
+        
+        <div className="z-10 bg-card/95 backdrop-blur-md rounded-3xl p-8 shadow-2xl border-2 border-primary/30 max-w-sm w-full">
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lock className="w-8 h-8 text-primary" />
+            </div>
+            <h1 className="text-2xl font-bold text-foreground mb-2">Secret Entrance 🔐</h1>
+            <p className="text-muted-foreground text-sm">Enter the magic password to begin your adventure!</p>
+          </div>
+          
+          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+            <Input
+              type="password"
+              placeholder="Enter password..."
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="text-center text-lg py-6 rounded-xl border-2 border-primary/30 focus:border-primary"
+              autoFocus
+            />
+            
+            {error && (
+              <p className="text-destructive text-sm text-center animate-shake">{error}</p>
+            )}
+            
+            <Button
+              type="submit"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl py-6 text-lg font-bold"
+            >
+              <Heart className="w-5 h-5 mr-2" fill="currentColor" />
+              Enter
+            </Button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 
