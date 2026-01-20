@@ -44,12 +44,6 @@ export default function Level1() {
     { id: 6, emoji: '❤️‍🔥', matched: matchedPairs.includes(6), selected: selectedItems.includes(6) },
   ];
 
-  const handleDialogueComplete = () => {
-    if (dialogueIndex < dialogues.length - 1) {
-      setDialogueIndex(dialogueIndex + 1);
-    }
-  };
-
   const handleDialogueClick = () => {
     if (dialogueIndex < dialogues.length - 1) {
       setDialogueIndex(dialogueIndex + 1);
