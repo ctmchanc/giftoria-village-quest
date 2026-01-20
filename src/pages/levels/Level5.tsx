@@ -193,12 +193,18 @@ export default function Level5() {
                   </div>
                 ) : (
                   <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center animate-scale-in">
-                    <div className="flex items-end justify-center gap-2">
-                      <CharacterSprite character="nappy" size="lg" />
-                      <div className="text-4xl animate-heart-beat">💕</div>
-                      <CharacterSprite character="noSleep" size="lg" />
+                    <div className="flex items-end justify-center gap-1">
+                      <div className="relative">
+                        <CharacterSprite character="nappy" size="lg" />
+                        <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-2xl animate-pulse">💤</span>
+                      </div>
+                      <div className="text-3xl animate-heart-beat mb-8">💕</div>
+                      <div className="relative">
+                        <CharacterSprite character="noSleep" size="lg" />
+                        <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-2xl animate-pulse" style={{ animationDelay: '0.5s' }}>😴</span>
+                      </div>
                     </div>
-                    <div className="text-3xl mt-2 animate-pulse">💤 Zzz...</div>
+                    <div className="text-2xl mt-2 animate-fade-in">Both sleeping peacefully... 🌙</div>
                   </div>
                 )}
 
