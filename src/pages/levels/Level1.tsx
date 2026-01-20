@@ -17,6 +17,7 @@ interface MatchItem {
 }
 
 const GIFT_MESSAGE = "[Your passionate love note goes here - tell him about the fire between you two! 🔥]";
+const GIFT_PHOTO = ""; // Add your photo URL here!
 
 export default function Level1() {
   const navigate = useNavigate();
@@ -205,6 +206,7 @@ export default function Level1() {
         <GiftReveal
           level={1}
           message={GIFT_MESSAGE}
+          photoUrl={GIFT_PHOTO || undefined}
           onClose={handleGiftClose}
         />
       )}

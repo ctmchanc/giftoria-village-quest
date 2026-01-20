@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import level5Bg from '@/assets/backgrounds/level5-bg.png';
 
 const GIFT_MESSAGE = "[Your cozy message about peaceful moments together goes here - falling asleep in each other's arms! ☁️😴]";
+const GIFT_PHOTO = ""; // Add your photo URL here!
 
 export default function Level5() {
   const navigate = useNavigate();
@@ -251,6 +252,7 @@ export default function Level5() {
         <GiftReveal
           level={5}
           message={GIFT_MESSAGE}
+          photoUrl={GIFT_PHOTO || undefined}
           onClose={handleGiftClose}
         />
       )}

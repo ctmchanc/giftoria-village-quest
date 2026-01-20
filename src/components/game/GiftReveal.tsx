@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Gift, Heart, Sparkles, X } from 'lucide-react';
+import { Gift, Heart, Sparkles, X, ImagePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Confetti } from './Confetti';
 import { cn } from '@/lib/utils';
@@ -70,15 +70,27 @@ export function GiftReveal({ level, message, photoUrl, onClose }: GiftRevealProp
               {levelTitles[level] || '🎁 Gift Unlocked!'}
             </h2>
             
-            {photoUrl && (
-              <div className="mb-4 rounded-2xl overflow-hidden border-2 border-love-light">
+            {/* Photo section - shows placeholder if no photo provided */}
+            <div className="mb-4 rounded-2xl overflow-hidden border-2 border-love-light">
+              {photoUrl ? (
                 <img
                   src={photoUrl}
                   alt="Special memory"
                   className="w-full h-48 object-cover"
                 />
-              </div>
-            )}
+              ) : (
+                <div className="w-full h-48 bg-muted/50 flex flex-col items-center justify-center gap-3">
+                  <div className="relative">
+                    <ImagePlus className="w-12 h-12 text-muted-foreground/60" />
+                    <Heart className="absolute -bottom-1 -right-1 w-5 h-5 text-love" fill="currentColor" />
+                  </div>
+                  <div className="text-center px-4">
+                    <p className="text-sm font-medium text-muted-foreground">Photo Placeholder</p>
+                    <p className="text-xs text-muted-foreground/70 mt-1">Add your special memory here! 📸</p>
+                  </div>
+                </div>
+              )}
+            </div>
             
             <div className="bg-love-light rounded-2xl p-4 mb-6">
               <p className="text-foreground text-lg italic leading-relaxed">

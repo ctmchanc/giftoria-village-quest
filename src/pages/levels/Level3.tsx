@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import level3Bg from '@/assets/backgrounds/level3-bg.png';
 
 const GIFT_MESSAGE = "[Your heartfelt love letter goes here - tell him how much he means to you! 💕]";
+const GIFT_PHOTO = ""; // Add your photo URL here!
 
 export default function Level3() {
   const navigate = useNavigate();
@@ -231,6 +232,7 @@ export default function Level3() {
         <GiftReveal
           level={3}
           message={GIFT_MESSAGE}
+          photoUrl={GIFT_PHOTO || undefined}
           onClose={handleGiftClose}
         />
       )}
