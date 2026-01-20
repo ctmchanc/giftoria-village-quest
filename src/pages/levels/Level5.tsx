@@ -201,10 +201,9 @@ export default function Level5() {
                       <div className="text-3xl animate-heart-beat mb-8">💕</div>
                       <div className="relative">
                         <CharacterSprite character="noSleep" size="lg" />
-                        <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-2xl animate-pulse" style={{ animationDelay: '0.5s' }}>😴</span>
+                        <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-2xl animate-pulse" style={{ animationDelay: '0.5s' }}>💤</span>
                       </div>
                     </div>
-                    <div className="text-2xl mt-2 animate-fade-in">Both sleeping peacefully... 🌙</div>
                   </div>
                 )}
 
