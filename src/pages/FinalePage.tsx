@@ -110,10 +110,24 @@ export default function FinalePage() {
 
         {/* Final message */}
         <div className={`transition-all duration-700 ${stage >= 3 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
-          <div className="bg-love-light/90 backdrop-blur-sm rounded-2xl p-6 text-center mb-6 border-2 border-love">
-            <p className="text-lg text-foreground font-medium leading-relaxed">
-              "[Your final birthday message goes here - make it special! This is where you can add a clue to his real birthday gift! 🎁💕]"
-            </p>
+          <div className="bg-love-light/90 backdrop-blur-sm rounded-2xl p-6 text-center mb-6 border-2 border-love max-h-[60vh] overflow-y-auto">
+            <div className="text-left text-foreground font-medium leading-relaxed space-y-4">
+              <p>Mr Bubbles another year of building the village, this year your nap cell exponentially grew and so did your Voltron. I love them both for taking care of you, and I love all the villagers that run around naked sweaty in the village even though they leave a lot of socks around. There's a fine implemented in the village by the sock police cell (of course she's my cell). The fine says "one sock = must wiggle booty cheek once & be my feet warmer with your armpits and belly" 🧦</p>
+              
+              <p>Whereas your Voltron is building a real life aquarium underwater, and said he will take me on dates there. 🐠</p>
+              
+              <p>Happy birthday to my dear Voltron, nap cell and all of your cells. Today we put dinosaur decorations across the whole village and it's a fiesta with a long siesta haha. We will celebrate all day all night long for 35 hours to bring in your 35th birthday and your introverted cell secretly loves it cause it's all his people. 🦖🎉</p>
+              
+              <p>Then when we all fall asleep from being drunk off fiesta, our memory bank will put this epic day in a vhs tape…Alongside vhs tape that dinosaur and dragon made hehe. 📼</p>
+              
+              <p>Happiest birthday yet my handsome bubbles baby turnip prince, I hope you enjoy the sushi tonight and I look forward to celebrating with you in person very soon. 🍣</p>
+              
+              <p>In your 35th year, I wish turnip an unlimited bank of internal validations enough to fill his brain with only the best things about himself because you're so so so worthwhile and turnip should know that he is too. I wish teenage turnip an ocean full of calmness, curiosity and security to love the world and life he has. And lastly I wish adult turnip the art of slowing down to his own rhythm when life wants to move fast, and to remember always that he is already everything he should be proud of. 💜</p>
+              
+              <p>From my villagers, we love you and I love you. I'm so proud of the man you have been and the man you'll continue to become. 💕</p>
+              
+              <p className="text-right italic mt-6">Your lil guava 🥑</p>
+            </div>
           </div>
 
           <div className="text-center">
