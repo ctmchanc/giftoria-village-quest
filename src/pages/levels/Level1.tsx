@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useGame } from '@/contexts/GameContext';
-import { DialogueBubble } from '@/components/game/DialogueBubble';
+import { ChatBubble } from '@/components/game/ChatBubble';
 import { CharacterSprite } from '@/components/game/CharacterSprite';
 import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
@@ -131,14 +131,13 @@ export default function Level1() {
           </div>
         </div>
 
-        {/* Dialogue */}
+        {/* iMessage-style Chat */}
         {stage === 'intro' && (
           <div onClick={handleDialogueClick} className="cursor-pointer">
-            <DialogueBubble
-              text={dialogues[dialogueIndex].text}
-              characterName={dialogues[dialogueIndex].character}
-              characterColor={dialogues[dialogueIndex].color}
-              onComplete={handleDialogueComplete}
+            <ChatBubble
+              messages={dialogues}
+              currentIndex={dialogueIndex}
+              typingSpeed={50}
             />
           </div>
         )}
