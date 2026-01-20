@@ -9,8 +9,8 @@ import { GiftReveal } from '@/components/game/GiftReveal';
 import { cn } from '@/lib/utils';
 import level5Bg from '@/assets/backgrounds/level5-bg.png';
 
-const GIFT_MESSAGE = "[Your cozy message about peaceful moments together goes here - falling asleep in each other's arms! ☁️😴]";
-const GIFT_PHOTO = ""; // Add your photo URL here!
+const GIFT_MESSAGE = "Baby, you're doing more than enough and I hope that the turnip, the teenage turnip and the now you will always remember that you can slow down and live life knowing that you are amazing just as you are. I know that so I always hope that you remember that and don't put so much pressure on yourself. You are a success just for being you. I love you 💕";
+const GIFT_PHOTO = "";
 
 export default function Level5() {
   const navigate = useNavigate();
